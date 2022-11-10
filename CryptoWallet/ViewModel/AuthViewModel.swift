@@ -12,7 +12,6 @@ class AuthViewModel: AuthViewModelType {
 
     var user = User()
      
-    
     func isAuth(login: String, password: String, completion: @escaping (Bool) -> ()) {
         if login == user.login && password == user.password {
             completion(true)

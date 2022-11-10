@@ -14,7 +14,6 @@ class DetailCryptoViewController: UIViewController {
     let detailLabel: UILabel = {
         let label = UILabel()
         label.font = .avenir26()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -39,6 +38,8 @@ extension DetailCryptoViewController {
     private func setupContraints() {
 
         view.addSubview(detailLabel)
+        
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             detailLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

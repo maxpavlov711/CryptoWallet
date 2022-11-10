@@ -13,7 +13,6 @@ class CryptoTableViewController: UIViewController {
     
     private var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .singleLine
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
@@ -22,7 +21,6 @@ class CryptoTableViewController: UIViewController {
     
     private var loader: UIActivityIndicatorView = {
         let loader = UIActivityIndicatorView()
-        loader.translatesAutoresizingMaskIntoConstraints = false
         loader.hidesWhenStopped = true
         return loader
     }()
@@ -37,8 +35,6 @@ class CryptoTableViewController: UIViewController {
         getData()
         setupConstrain()
         setupTableView()
-        
-        setupNavigationButton()
     }
     
     private func getData() {
@@ -46,14 +42,16 @@ class CryptoTableViewController: UIViewController {
         
         viewModel?.getCrypto {[weak self] crypto in
             self?.loader.stopAnimating()
+            self?.setupNavigationButton()
             self?.tableView.reloadData()
         }
     }
     
     private func setupNavigationButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(tabClose))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Filtred", style: .plain, target: self, action: #selector(tabFiltred))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Exit", style: .plain, target: self, action: #selector(tabClose))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(tabFiltred))
         navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.rightBarButtonItem?.tintColor = .black
     }
 
     private func setupTableView() {
@@ -81,7 +79,7 @@ extension CryptoTableViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel?.numberOfRows() ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CryptoViewCell.identifier, for: indexPath)
         guard let cryptoCell = cell as? CryptoViewCell else { return cell }
@@ -106,6 +104,9 @@ extension CryptoTableViewController {
         
         view.addSubview(tableView)
         view.addSubview(loader)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        loader.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),

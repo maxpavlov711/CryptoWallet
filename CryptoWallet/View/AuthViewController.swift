@@ -31,11 +31,15 @@ class AuthViewController: UIViewController {
         loginTextField.delegate = self
         passwordTextField.delegate = self
         
+        notificationTouch()
+        
+        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+    }
+    
+    private func notificationTouch() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
-
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
     

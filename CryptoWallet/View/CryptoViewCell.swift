@@ -32,6 +32,7 @@ class CryptoViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupContraints()
+        self.selectionStyle = UITableViewCell.SelectionStyle.none
     }
     
     required init?(coder: NSCoder) {
